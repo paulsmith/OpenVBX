@@ -1,8 +1,12 @@
 <?php
 $response = new TwimlResponse;
 
+function modwrap($num, $mod) {
+    return ($mod + ($num % $mod)) % $mod;
+}
+
 $now = date_create('now');
-$today = date_format($now, 'w') - 1;
+$today = modwrap(date_format($now, 'w') - 1, 7);
 
 $response->redirect(AppletInstance::getDropZoneUrl(
   ($from = AppletInstance::getValue("range_{$today}_from"))
